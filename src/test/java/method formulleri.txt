@@ -1,0 +1,79 @@
+
+
+    1:Systen dosyasi olusturulurrency
+       System.setProperty("webdriver.chrome.driver","src/resources/drivers/chromedriver.exe");
+    2.WebDriver atama yapilir
+        WebDriver driver=new ChromeDriver();
+    3.  web sayfasi maximize edilir
+        driver.manage().window().maximize();
+    4.web sayfasi calisma suresi belirlenir
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
+    5. istenen sayfaya gdilir mesela amazon web sayfası
+        driver.get("https://www.amazon.com/");
+
+    6. istenen element bulusnu ve isaretlenir mesela search box
+       WebElement aramaKutusu=driver.findElement(By.id("twotabsearchtextbox")); // burada xpath de kullanila bilir
+
+    7.arama kutusuna istedigimiz kelime yazilir ve enter yapilir
+       aramaKutusu.sendKeys("city bike"+ Keys.ENTER);
+
+    8.  Amazon'da görüntülenen ilgili sonuçların sayısını yazdırır
+
+        List<WebElement> istenenElemetListesi=driver.findElements(By.className("sg-col-inner"));
+        WebElement sonucYazisiElementi=istenenElemetListesi.get(0);
+        System.out.println(sonucYazisiElementi.getText());
+
+    9. Sonra karsiniza cikan ilk sonucun resmine tiklar
+        List<WebElement> urunResimleriList=driver.findElements(By.className("s-image"));
+        WebElement ilkUrunResim=urunResimleriList.get(0);
+        ilkUrunResim.click();
+
+    10.email textbox,password textbox, and signin button elementlerini locate etme
+               WebElement emailTextBox=driver.findElement(By.id("session_email"));
+               WebElement passwordTextBox=driver.findElement(By.name("session[password]"));
+               WebElement signInButonu= driver.findElement(By.name("commit"));
+
+    11.Kullanıcı adını ve şifreyi aşağıya girin ve oturum aç (sign in)buttonunu tıklayın:
+               //      i. Username : testtechproed@gmail.com
+               //      ii. Password : Test1234!
+               emailTextBox.sendKeys("testtechproed@gmail.com");
+               passwordTextBox.sendKeys("Test1234!");
+               signInButonu.click();
+
+
+    12. Sayfada kac tane link oldugunu bulun.
+               List<WebElement> linklerListesi= driver.findElements(By.tagName("a"));
+                System.out.println("sayfadaki link sayisi : " + linklerListesi.size());
+    13. linkleri yazdiralim
+        // Listemiz webelementlerden olustugu icin, direk yazdirirsak referanslari yazdirir
+        // onun yerine for-each loop yapip her bir link webelementinin uzerindeki yaziyi yazdirmaliyiz
+
+                for (WebElement each: linklerListesi
+                ) {
+                    System.out.println(each.getText());
+
+    14. sayfa kapatma
+         driver.close();
+
+
+    15.  Basligin Amazon kelimesi icerdigini test edin
+               driver.get("https://www.amazon.com");
+
+                String actualTitle = driver.getTitle();
+                String arananKelime="Amazon";
+                if (actualTitle.contains(arananKelime)){
+                    System.out.println("Title Testi PASSED");
+                } else {
+                    System.out.println("Title "+ arananKelime + "'yi icermiyor, title testi FAILED");
+                }
+
+    16. Url'in "https://www.amazon.com" a esit oldugunu test edin
+
+               String actualUrl= driver.getCurrentUrl();
+               String expectedUrl="https://www.amazon.com";
+               if(actualUrl.equals(expectedUrl)){
+                   System.out.println("Url testi PASSED");
+               }else{
+                   System.out.println("actual Url:"+actualUrl+" beklenen URL'den farkli, test FAILED");
+               }

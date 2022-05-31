@@ -14,7 +14,7 @@ public class C04_getPageSource {
         String sayfaKaynakKodlari =driver.getPageSource();
         String arananKelime="spend";
         if (sayfaKaynakKodlari.contains(arananKelime)){
-            System.out.println("kaynak kod ted passed");
+            System.out.println("kaynak kod test passed");
 
         }else{
             System.out.println("Kaynak kodlarinda " + arananKelime +" yok, test FAILED");
